@@ -4,20 +4,28 @@ function fetchCloned(url, success, error){
 
     var xhr = new XMLHttpRequest();
 
-    xhr.onload = function(e) {
-        success(this.response);
-    }; 
+    if(success) {
 
-    xhr.onerror = function(e) {
-        var msg = "Not loaded, because there are errors",
-            srvResponse = this.response;
-        error({
-            message: msg,
-            response: srvResponse
-        })
+        xhr.onload = function(e) {
+            success(this.response);
+        };
+
+        if(error) {
+            xhr.onerror = function(e) {
+                var msg = "Error, not loaded",
+                    srvResponse = this.response;
+                error({
+                    message: msg,
+                    response: srvResponse
+                })
+            };
+        };
+
     };
-
-    xhr.open("GET", url)
-    xhr.send();   
     
-}
+        xhr.open("GET", url)
+        xhr.send();
+
+};
+
+console.log('Pobierz dane z serwera za pomocą funkcji fetchCloned([url] [, success] [, error])');
