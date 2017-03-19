@@ -7,7 +7,9 @@ function fetchCloned(url, success, error){
     if(success) {
 
         xhr.onload = function(e) {
-            success(this.response);
+            if(xhr.status === 200) {
+                success(this.response);
+            }
         };
 
         if(error) {
